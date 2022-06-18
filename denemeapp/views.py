@@ -37,7 +37,7 @@ class UserViewSet(viewsets.ViewSet):
 
     @action(detail=True, methods=["get"], url_path=r'is-active-meeting',)
     def User_Active_Meeting(self, request, pk=None):
-        data = Meetings.objects.filter(user=3).filter(
+        data = Meetings.objects.filter(user=pk).filter(
             start_date__lte=datetime.datetime.now()).filter(end_date__gte=datetime.datetime.now())
         serializer = MeetingSerializer(data, many=True)
         return Response(serializer.data)
@@ -61,8 +61,10 @@ class MeetingsViewSet(viewsets.ViewSet):
     def create(self, request, *args, **kwargs):
         serializer = MeetingSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
         participant_roles = [Users.objects.filter(pk=l).values(
         )[0]['role'] for l in request.data.getlist("user")]
+        
         if "TUTOR" in participant_roles and len(participant_roles) > 1:
             serializer.is_valid(raise_exception=True)
             serializer.save()

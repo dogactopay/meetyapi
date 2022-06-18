@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'rest_framework',
     'denemeapp',  
+    'reviews',  
+    'tangible',
     'django.contrib.staticfiles',
 ]
 

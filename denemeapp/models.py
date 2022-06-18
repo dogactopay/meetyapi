@@ -23,12 +23,9 @@ def today_utc():
     return datetime.utcnow()
 
 
-
-
-
 class Users(models.Model):
     user_id = models.AutoField(primary_key=True)
-    
+
     created = models.DateTimeField(auto_now_add=True)
     username = models.CharField(max_length=100, blank=True, default='')
     role = models.CharField(choices=ROLES, default='user', max_length=100)
@@ -38,7 +35,8 @@ class Users(models.Model):
 
     class Meta:
         ordering = ['created']
-        
+
+
 class Tutor(models.Model):
     user = models.OneToOneField(Users, on_delete=models.CASCADE)
     tutor_id = models.AutoField(primary_key=True)
@@ -52,6 +50,7 @@ class Tutor(models.Model):
 
     class Meta:
         ordering = ['created']
+
 
 class Meetings(models.Model):
     user = models.ManyToManyField(
