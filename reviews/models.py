@@ -1,6 +1,6 @@
 from logging import RootLogger
 from django.db import models
-from denemeapp.models import Users
+from users.models import Users
 import uuid
 from datetime import datetime
 from django.utils import timezone

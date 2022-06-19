@@ -1,6 +1,6 @@
 
 from .models import Transaction, Balance
-from denemeapp.models import Users
+from users.models import Users
 from .serializers import BalanceSerializer, TransactionSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response

@@ -36,10 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'rest_framework',
-    'denemeapp',  
+    'rest_framework', 
     'reviews',  
     'tangible',
+    'meetings',
+    'users',
+    'courses',
     'django.contrib.staticfiles',
 ]
 

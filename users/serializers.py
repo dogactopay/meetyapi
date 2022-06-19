@@ -1,16 +1,11 @@
 from rest_framework import serializers
-from .models import Users, Meetings, Tutor
+from .models import Users, Tutor
+from meetings.models import Meetings
+from meetings.serializers import MeetingSerializer
 from reviews.models import Review
 from reviews.serializers import ReviewSerializer
 from tangible.serializers import TransactionSerializer, BalanceSerializer
 
-
-class MeetingSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Meetings
-        fields = ['room_id', 'room_name', 'is_active', 'created',
-                  'user', 'start_date', 'end_date', 'duration']
 
 
 class TutorSerializer(serializers.ModelSerializer):

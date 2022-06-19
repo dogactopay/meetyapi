@@ -1,8 +1,10 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from denemeapp.models import Users, Meetings, Tutor
-from .serializers import MeetingSerializer, TutorSerializer, UserSerializer
+from .models import Users, Tutor
+from meetings.models import Meetings
+from .serializers import TutorSerializer, UserSerializer
+from meetings.serializers import MeetingSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import permissions
@@ -42,35 +44,6 @@ class UserViewSet(viewsets.ViewSet):
         serializer = MeetingSerializer(data, many=True)
         return Response(serializer.data)
 
-
-class MeetingsViewSet(viewsets.ViewSet):
-
-    serializer_class = MeetingSerializer
-
-    def list(self, request):
-        queryset = Meetings.objects.all()
-        serializer = MeetingSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, pk=None):
-        queryset = Meetings.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = MeetingSerializer(user)
-        return Response(serializer.data)
-
-    def create(self, request, *args, **kwargs):
-        serializer = MeetingSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        participant_roles = [Users.objects.filter(pk=l).values(
-        )[0]['role'] for l in request.data.getlist("user")]
-        
-        if "TUTOR" in participant_roles and len(participant_roles) > 1:
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response({"message": "At least 1 tutor required!"})
 
 
 class TutorViewSet(viewsets.ViewSet):
