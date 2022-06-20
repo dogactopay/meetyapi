@@ -18,3 +18,4 @@ class CategorySerializer(serializers.ModelSerializer):
 
         fields = ['category_name','course_category_name']
 
+

@@ -24,7 +24,7 @@ class Meetings(models.Model):
     room_id = models.AutoField(primary_key=True)
     room_name = models.CharField(
         max_length=100, default=uuid.uuid4)
-    is_active = models.BooleanField(default=False)
+    #is_active = models.BooleanField(default=False)
     start_date = models.DateTimeField(default=today_utc)
     end_date = models.DateTimeField(default=today_utc)
 

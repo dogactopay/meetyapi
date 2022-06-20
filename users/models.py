@@ -1,6 +1,7 @@
 from logging import RootLogger
 from django.db import models
 from pygments.lexers import get_all_lexers
+
 from pygments.styles import get_all_styles
 import uuid
 from datetime import datetime
@@ -27,6 +28,7 @@ class Users(models.Model):
     user_id = models.AutoField(primary_key=True)
 
     created = models.DateTimeField(auto_now_add=True)
+    
     username = models.CharField(max_length=100, blank=True, default='')
     role = models.CharField(choices=ROLES, default='user', max_length=100)
 
@@ -40,6 +42,7 @@ class Users(models.Model):
 class Tutor(models.Model):
     user = models.OneToOneField(Users, on_delete=models.CASCADE)
     tutor_id = models.AutoField(primary_key=True)
+    is_verified = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     hourly_price = models.DecimalField(
         max_digits=5, decimal_places=2, default=0)
@@ -51,3 +54,17 @@ class Tutor(models.Model):
     class Meta:
         ordering = ['created']
 
+
+class Purchased_Course(models.Model):
+    purchase_id = models.AutoField(primary_key=True)
+    created = models.DateTimeField(auto_now_add=True)
+    purchased_user = models.ForeignKey(
+        Users, on_delete=models.CASCADE, related_name='course_purchased_user')
+    purchased_course = models.ForeignKey(
+        to='courses.Course', on_delete=models.CASCADE, related_name='course_purchased_course')
+
+    def __str__(self):
+        return str(self.purchase_id)
+
+    class Meta:
+        ordering = ['created']

@@ -31,6 +31,8 @@ class Balance(models.Model):
     balance = models.FloatField(default=0)
 
 
+    def __str__(self):
+        return str(self.user_balance.username)
 
     class Meta:
         ordering = ['created']
